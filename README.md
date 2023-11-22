@@ -70,3 +70,5 @@ More sample examples can be found in main.py in root directory.
 
 1) https://www.youtube.com/watch?v=LRcZ9pbGnno&ab_channel=Qdrant
 2) https://colab.research.google.com/github/qdrant/examples/blob/master/extractive_qa/extractive-question-answering.ipynb#scrollTo=_4NRgV4mGWoj
+3) https://huggingface.co/sentence-transformers/multi-qa-MiniLM-L6-cos-v1
+4) https://huggingface.co/bert-large-uncased-whole-word-masking-finetuned-squad
