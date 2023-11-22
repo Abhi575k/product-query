@@ -3,3 +3,6 @@ qdrant-client==1.2.0
 sentence-transformers==2.2.2
 transformers
 pandas==1.5.3
+fastapi
+uvicorn
+faker

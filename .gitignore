@@ -1,3 +1,7 @@
 .ipynb_checkpoints
-./app/.ipynb_checkpoints
+app/.ipynb_checkpoints
 venv
+app/main.ipynb
+reader
+retriever
+__pycache__
