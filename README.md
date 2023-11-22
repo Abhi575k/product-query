@@ -1,4 +1,4 @@
-# Large Language Model Using Qdrant
+# LLM Using Qdrant
 
 ## Setup
 
@@ -18,28 +18,55 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-## Miscellaneous
+## API
 
-1) The code assumes the product name(s) to be unique.
-2) The input csv should be named "data.csv".
-
-## TODO
-
-1) Dissolve multiple colums to a single column - description
-2) Learn how to use a Qdrant client over a Docker
-3) Create Qdrant collection
-4) Initialize retriever for embedding context and queries
+The API has the following function calls:
+```
+def get_relevant_product(question, top_k, retriever, client, collection_name)
+```
+Given a question, this function encodes it using `multi-qa-MiniLM-L6-cos-v1` and queries it over our Qdrant client to retrieve relevant `top_k` product and it's context.
 
 ```
-# set device to GPU if available
-device = "cuda" if torch.cuda.is_available() else "cpu"
-
-# load the retriever model from huggingface model hub
-retriever = SentenceTransformer("multi-qa-MiniLM-L6-cos-v1", device=device)
-retriever
+def extract_answer(question, context, reader)
 ```
+From a given context, this function uses `bert-large-uncased-whole-word-masking-finetuned-squad` reader to generate answer for the query.
+
+```
+def get_answer(question, retriever, reader, qdrant_client, collection_name)
+```
+From the extracted `top_k` answers, this function returns the answer with the highest score.
+The result is an object:
+```
+{'score': 0.8675349354743958, 'start': 79, 'end': 84, 'answer': '299.0', 'product': 'Sandal Skin Lightening Cream'}
+```
+
+### Example
+
+For the below code snippet:
+```
+# ask question
+question = "Suggest me a Diet food."
+print(question)
+answer = get_answer(question, retriever, reader, qdrant_client, collection_name)
+print('Product: ', answer['product'], '\nAnswer: ', answer['answer'], ' ', '\nScore: ', answer['score'])
+```
+
+The output is:
+```
+Suggest me a Diet food.
+Product:  Jaggery Spiced Cashews Trail Mix 
+Answer:  Snacks, Dry Fruits, Nuts   
+Score:  0.016895370557904243
+```
+
+More sample examples can be found in main.py in root directory.
+
+## Similar Work
+
+1) [Discord Chat Bot](https://github.com/Abhi575k/discord-chatbot)
+2) [Mail Spam Detector](https://github.com/Abhi575k/mail-spam-detector)
 
 ## References
 
 1) https://www.youtube.com/watch?v=LRcZ9pbGnno&ab_channel=Qdrant
-2) 
+2) https://colab.research.google.com/github/qdrant/examples/blob/master/extractive_qa/extractive-question-answering.ipynb#scrollTo=_4NRgV4mGWoj

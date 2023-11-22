@@ -1,5 +1,7 @@
 import warnings
 warnings.filterwarnings("ignore")
+from transformers import logging
+logging.set_verbosity_error()
 
 from api.utils.utilities import getQdrantClient
 from api.utils.utilities import getRetriever
@@ -33,10 +35,21 @@ if collection_name not in [c.name for c in collections.collections]:
 reader = getReader()
 
 # ask question
-question = "What is the price of best skincare product?"
-
+question = "Which is the best face cream?"
 print(question)
+answer = get_answer(question, retriever, reader, qdrant_client, collection_name)
+print('Product: ', answer['product'], '\nAnswer: ', answer['answer'], ' ', '\nScore: ', answer['score'])
 
-print(get_answer(question, retriever, reader, qdrant_client, collection_name))
+# ask question
+question = "Suggest me a Diet food."
+print(question)
+answer = get_answer(question, retriever, reader, qdrant_client, collection_name)
+print('Product: ', answer['product'], '\nAnswer: ', answer['answer'], ' ', '\nScore: ', answer['score'])
+
+# ask question
+question = "Which is the best moisturiser?"
+print(question)
+answer = get_answer(question, retriever, reader, qdrant_client, collection_name)
+print('Product: ', answer['product'], '\nAnswer: ', answer['answer'], ' ', '\nScore: ', answer['score'])
 
 

@@ -10,7 +10,7 @@ def preprocess(file_name):
     df = df.drop(columns=['index'])
 
     # drop duplicates products
-    df = df.drop_duplicates(subset=['product'])
+    # df = df.drop_duplicates(subset=['product'])
 
     # drop null values
     df = df.dropna()
